@@ -4,7 +4,7 @@ export default function About() {
   return (
     <Box p={8}>
       <Heading>home Page</Heading>
-      <Text mt={4}>Ini adalah halaman home.</Text>
+      <Text mt={4}>Ini adalah halaman home by putra.</Text>
     </Box>
   );
 }
