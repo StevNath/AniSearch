@@ -12,7 +12,7 @@ export default function Navbar() {
 
         <HStack spacing={8} alignItems="center" display={{ base: "none", md: "flex" }}>
             <Link as={RouterLink} to="./">Home</Link>
-  <Link as={RouterLink} to="./about">About</Link>
+            <Link as={RouterLink} to="./about">About</Link>
         </HStack>
 
         <IconButton
