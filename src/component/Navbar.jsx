@@ -4,15 +4,15 @@ import { Link as RouterLink } from "react-router-dom";
 export default function Navbar() {
 
   return (
-    <Box background={"purple"} px={4}>
+    <Box background={"blue.700"} px={4} color={"white"}>
       <Flex h={16} alignItems="center">
-        <Box fontWeight="bold">MyWebsite</Box>
+        <Box fontWeight="Semibold" textStyle="4xl" >AnimeSearch</Box>
 
         <Spacer />
 
         <HStack spacing={8} alignItems="center" display={{ base: "none", md: "flex" }}>
-            <Link as={RouterLink} to="./">Home</Link>
-            <Link as={RouterLink} to="./about">About</Link>
+            <Link as={RouterLink} to="./" color={"white"}>Home</Link>
+            <Link as={RouterLink} to="./about" color={"white"}>About</Link>
         </HStack>
 
         <IconButton
