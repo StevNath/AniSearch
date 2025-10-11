@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Heading, Text, Grid, Image, Link, AspectRatio } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { getAnimeDetails } from "../API_JIKAN_V4/jikanv4";
+
+const MotionBox = motion(Box);
 
 export default function AnimeDetails() {
   const { id } = useParams();
@@ -62,7 +65,15 @@ export default function AnimeDetails() {
   }
 
   return (
-    <Box bg="white" color="gray.800" minH="100vh" p={{ base: 4, md: 8 }}>
+    <MotionBox
+      bg="white"
+      color="gray.800"
+      minH="100vh"
+      p={{ base: 4, md: 8 }}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
       <Grid
         templateColumns={{ base: "1fr", md: "280px 1fr" }}
         gap={8}
@@ -71,7 +82,11 @@ export default function AnimeDetails() {
         alignItems="flex-start"
       >
         {/* Gambar poster */}
-        <Box>
+        <MotionBox
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           <Image
             src={anime.images?.jpg?.large_image_url}
             alt={anime.title}
@@ -79,27 +94,30 @@ export default function AnimeDetails() {
             shadow="md"
             w="100%"
           />
-    
-    {/* Trailernya yach */}
-{anime.trailer?.youtube_id && ( 
-  <Box mt={4}>
-    <Heading size="sm" mb={2}>Trailer:</Heading>
-    <AspectRatio ratio={16 / 9}>
-      <iframe
-        // di embed yach sayang (>w<) biar bisa langsung nonton sama minim bug
-        src={`https://www.youtube.com/embed/${anime.trailer.youtube_id}`}
-        title={`${anime.title} Trailer`}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowFullScreen
-        style={{ border: 0 }} 
-      />
-    </AspectRatio>
-  </Box>
-)}
-        </Box>
+
+          {/* Trailer */}
+          {anime.trailer?.youtube_id && (
+            <Box mt={4}>
+              <Heading size="sm" mb={2}>Trailer:</Heading>
+              <AspectRatio ratio={16 / 9}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${anime.trailer.youtube_id}`}
+                  title={`${anime.title} Trailer`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                  style={{ border: 0 }} 
+                />
+              </AspectRatio>
+            </Box>
+          )}
+        </MotionBox>
 
         {/* Detail anime */}
-        <Box>
+        <MotionBox
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           <Heading size="lg" mb={1}>
             {anime.title}
           </Heading>
@@ -124,13 +142,42 @@ export default function AnimeDetails() {
             <Text>{anime.duration || "-"}</Text>
 
             <Text fontWeight="bold">Season:</Text>
-            <Text>{anime.season ? `${anime.season} ${anime.year || ""}` : "-"}</Text>
+            <Text>
+              {anime.season ? `${anime.season.charAt(0).toUpperCase()}${anime.season.slice(1)} ${anime.year || ""}` : "-"}
+            </Text>
+
 
             <Text fontWeight="bold">Studio:</Text>
             <Text>{anime.studios?.map(studio => studio.name).join(", ") || "-"}</Text>
 
+            {/* Genres sebagai badge berwarna */}
             <Text fontWeight="bold">Genres:</Text>
-            <Text>{anime.genres?.map(genre => genre.name).join(", ") || "-"}</Text>
+            <Box display="flex" flexWrap="wrap" gap={2}>
+              {anime.genres?.map((genre, index) => {
+                const colors = ["#E53E3E", "#3182CE", "#38A169", "#D69E2E", "#805AD5", "#DD6B20"];
+                const color = colors[index % colors.length];
+
+                return (
+                  <MotionBox
+                    key={genre.mal_id}
+                    px={3}
+                    py={1}
+                    borderRadius="md"
+                    border="1px solid"
+                    borderColor={color}
+                    bg={`${color}20`}
+                    color={color}
+                    fontWeight="bold"
+                    fontSize="sm"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 * index }}
+                  >
+                    {genre.name}
+                  </MotionBox>
+                );
+              })}
+            </Box>
           </Grid>
 
           <Heading size="md" mb={2}>Sinopsis:</Heading>
@@ -138,7 +185,6 @@ export default function AnimeDetails() {
             {anime.synopsis || "Sinopsis tidak tersedia."}
           </Text>
 
-          {/* Link ke MyAnimeList */}
           {anime.url && (
             <Box mt={4}>
               <Link href={anime.url} color="blue.500" isExternal>
@@ -146,8 +192,8 @@ export default function AnimeDetails() {
               </Link>
             </Box>
           )}
-        </Box>
+        </MotionBox>
       </Grid>
-    </Box>
+    </MotionBox>
   );
 }
