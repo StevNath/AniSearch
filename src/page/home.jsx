@@ -59,8 +59,8 @@ export default function Home() {
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {TopAnimes.slice(0, 6).map((anime) => (
           <Box key={anime.mal_id}>
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" m={5} boxShadow="md">
-              <Image src={anime.images.jpg.image_url} alt={anime.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
+            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" m={5} boxShadow="md" transition="all 0.3s ease" _hover={{ transform: "scale(1.05)",boxShadow:"lg"}}>
+              <Image src={anime.images.jpg.image_url} alt={anime.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} transition="all 0.3s ease" _hover={{ transform: "scale(1.05)",boxShadow:"lg"}} />
               <Box p={5}>
                 <Link to={`/anime/${anime.mal_id}`} >{anime.title}
                 <Text fontSize="sm" color="gray.500">{anime.season} {anime.year}</Text>
@@ -77,8 +77,8 @@ export default function Home() {
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {SeasonNowAnimes.slice(0, 6).map((anime) => (
           <Box key={anime.mal_id}>
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" m={5} boxShadow="md">
-              <Image src={anime.images.jpg.image_url} alt={anime.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
+            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" m={5} boxShadow="md" transition="all 0.3s ease" _hover={{ transform: "scale(1.05)",boxShadow:"lg"}}>
+              <Image src={anime.images.jpg.image_url} alt={anime.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} transition="all 0.3s ease" _hover={{ transform: "scale(1.05)",boxShadow:"lg"}}/>
               <Box p={5}>
                 <Link to={`/anime/${anime.mal_id}`} >{anime.title}
                 <Text fontSize="sm" color="gray.500">Score: {anime.score}</Text>
