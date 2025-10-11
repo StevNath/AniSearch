@@ -1,4 +1,5 @@
-import { Box, Heading, Text, Grid,Image} from "@chakra-ui/react";
+import { Box, Heading, Text, Grid,Image, Icon} from "@chakra-ui/react";
+import { HiStar } from "react-icons/hi";
 import { getTopAnime } from "../API_JIKAN_V4/jikanv4";
 import { getSeasonNowAnime } from "../API_JIKAN_V4/jikanv4";
 import { useState, useEffect } from "react";
@@ -64,7 +65,7 @@ export default function Home() {
               <Box p={5}>
                 <Link to={`/anime/${anime.mal_id}`} >{anime.title}
                 <Text fontSize="sm" color="gray.500">{anime.season} {anime.year}</Text>
-                <Text fontSize="sm" color="gray.500">Score: {anime.score}</Text>
+                <Text fontSize="sm" color="gray.500">&#11088;{anime.score}</Text>
                 </Link>
               </Box>
             </Box>
@@ -81,7 +82,7 @@ export default function Home() {
               <Image src={anime.images.jpg.image_url} alt={anime.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} transition="all 0.3s ease" _hover={{ transform: "scale(1.05)",boxShadow:"lg"}}/>
               <Box p={5}>
                 <Link to={`/anime/${anime.mal_id}`} >{anime.title}
-                <Text fontSize="sm" color="gray.500">Score: {anime.score}</Text>
+                <Text fontSize="sm" color="gray.500">&#11088;{anime.score || "N/A"}</Text>
                 </Link>
               </Box>
             </Box>
