@@ -101,6 +101,7 @@ export default function AnimeDetails() {
               <Heading size="sm" mb={2}>Trailer:</Heading>
               <AspectRatio ratio={16 / 9}>
                 <iframe
+                // Diembedded yach sayang (>w<) biar bisa langsung nonton
                   src={`https://www.youtube.com/embed/${anime.trailer.youtube_id}`}
                   title={`${anime.title} Trailer`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
