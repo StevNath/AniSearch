@@ -13,10 +13,18 @@ export default function Home() {
   useEffect(() => {
     // Ambil data Anime
     async function fetchAnime() {
-      const TopanimeData = await getTopAnime();
+      try {
+        const TopanimeData = await getTopAnime();
+        setTopAnimes(TopanimeData);
+      } catch (err) {
+        console.error("Error fetching top anime:", err);
+      }
+      try {
       const seasonNowData = await getSeasonNowAnime();
-      setTopAnimes(TopanimeData);
       setSeasonAnimes(seasonNowData);
+      } catch (err) {
+        console.error("Error fetching season now anime:", err);
+      }
     }
     fetchAnime();
   }, []);
@@ -50,11 +58,14 @@ export default function Home() {
       <Heading fontSize="2xl" mb={4} ml={2}>Top Anime</Heading>
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {TopAnimes.slice(0, 6).map((anime) => (
-          <Box>
+          <Box key={anime.mal_id}>
             <Box borderWidth="1px" borderRadius="lg" overflow="hidden" m={5} boxShadow="md">
               <Image src={anime.images.jpg.image_url} alt={anime.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
               <Box p={5}>
-                <Link to={`/anime/${anime.mal_id}`} >{anime.title}</Link>
+                <Link to={`/anime/${anime.mal_id}`} >{anime.title}
+                <Text fontSize="sm" color="gray.500">{anime.season} {anime.year}</Text>
+                <Text fontSize="sm" color="gray.500">Score: {anime.score}</Text>
+                </Link>
               </Box>
             </Box>
           </Box>
@@ -65,11 +76,13 @@ export default function Home() {
       <Heading fontSize="2xl" mb={4} ml={2}>Anime Season Now</Heading>
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {SeasonNowAnimes.slice(0, 6).map((anime) => (
-          <Box>
+          <Box key={anime.mal_id}>
             <Box borderWidth="1px" borderRadius="lg" overflow="hidden" m={5} boxShadow="md">
               <Image src={anime.images.jpg.image_url} alt={anime.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
               <Box p={5}>
-                <Link to={`/anime/${anime.mal_id}`} >{anime.title}</Link>
+                <Link to={`/anime/${anime.mal_id}`} >{anime.title}
+                <Text fontSize="sm" color="gray.500">Score: {anime.score}</Text>
+                </Link>
               </Box>
             </Box>
           </Box>
