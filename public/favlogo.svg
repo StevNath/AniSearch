@@ -1,0 +1,17 @@
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" viewBox="0 0 116 116" width="620" height="140" role="img" aria-label="AniSearch kawaii logo">
+  <ns0:defs>
+    <ns0:linearGradient id="kawaiiGrad" x1="0" y1="0" x2="1" y2="1">
+      <ns0:stop offset="0" stop-color="#FFC1E3" />
+      <ns0:stop offset="1" stop-color="#AEE2FF" />
+    </ns0:linearGradient>
+  </ns0:defs>
+
+  
+  <ns0:circle cx="60" cy="70" r="45" fill="url(#kawaiiGrad)" stroke="#fff" stroke-width="4" />
+  
+  <ns0:ellipse cx="60" cy="72" rx="22" ry="14" fill="#0B1020" opacity="0.9" />
+  <ns0:circle cx="68" cy="64" r="6" fill="#fff" />
+  <ns0:circle cx="55" cy="60" r="3" fill="#fff" />
+  <ns0:path d="M38 74 Q60 48 82 74" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" />
+  <ns0:circle cx="90" cy="86" r="6" fill="#FFB7D5" opacity="0.8" />
+</ns0:svg>

@@ -4,7 +4,7 @@ export default function About() {
   return (
     <Box>
       <Box background={"blue.300"} p={50} color={"white"}>
-        <Heading>  Welcome To AnimeSearch</Heading>
+        <Heading>  Welcome To AniSearch</Heading>
         <Text textStyle="4xl" fontWeight="bold" mt={1} >Place For Every Anime</Text>
       </Box>
 

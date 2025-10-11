@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Link, IconButton, Spacer, Input } from "@chakra-ui/react";
+import { Box, Flex, HStack, Link, IconButton, Spacer, Input, Image } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
 export default function Navbar() {
@@ -6,7 +6,10 @@ export default function Navbar() {
   return (
     <Box background={"blue.700"} px={4} color={"white"}>
       <Flex h={16} alignItems="center">
-        <Box as={RouterLink} to="/" fontWeight="Semibold" textStyle="4xl" >AnimeSearch</Box>
+        <Box as={RouterLink} to="/">
+        <Image src="/logo.svg" alt="Logo" boxSize="300px" mr={5} objectFit="contain" />
+        </Box>
+  
         <Spacer />
         <Box w="500px"  ml="-400px">
             <Input textAlign="start"       
