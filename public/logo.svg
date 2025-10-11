@@ -19,5 +19,5 @@
   <ns0:text x="120" y="85" font-family="'Comic Neue', 'Poppins', sans-serif" font-weight="700" font-size="46" fill="#E0E7FF">
     Ani<ns0:tspan fill="#AEEEEE">Search</ns0:tspan>
   </ns0:text>
-  <ns0:text x="125" y="110" font-family="'Comic Neue', cursive" font-size="16" fill="#777">Your World Of Anime Awaits &#10024;</ns0:text>
+  <ns0:text x="125" y="110" font-family="'Comic Neue', cursive" font-size="16" fill="#fff">Your World Of Anime Awaits &#10024;</ns0:text>
 </ns0:svg>
