@@ -1,6 +1,3 @@
-import { param } from 'framer-motion/client';
-import { useState, useEffect } from 'react';
-
 const BASE_URL = 'https://api.jikan.moe/v4';
 
 /**
@@ -44,4 +41,16 @@ export async function getSeasonNowAnime() {
         console.error("SeasonNow Error:", error);
         return [];
     }
+}
+
+// ambil data id untuk anime details
+export async function getAnimeDetails(id) {
+  try {
+    const response = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching anime details:", error);
+    return null;
+  }
 }
