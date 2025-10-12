@@ -1,5 +1,4 @@
-import { Box, Heading, Text, Grid,Image, Icon} from "@chakra-ui/react";
-import { HiStar } from "react-icons/hi";
+import { Box, Heading, Text, Grid,Image,} from "@chakra-ui/react";
 import { getTopAnime } from "../API_JIKAN_V4/jikanv4";
 import { getSeasonNowAnime } from "../API_JIKAN_V4/jikanv4";
 import { useState, useEffect } from "react";
