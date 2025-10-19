@@ -11,9 +11,12 @@ export default function ComingSoon() {
   const fetchUpcoming = async (pageNum) => {
     setLoading(true);
     try {
-      const res = await fetch(`https://api.jikan.moe/v4/anime?status=upcoming&page=${pageNum}`);
+      // 🎯 Tambahkan order_by=popularity dan sort=asc
+      const res = await fetch(
+        `https://api.jikan.moe/v4/anime?status=upcoming&order_by=popularity&sort=asc&page=${pageNum}`
+      );
       const data = await res.json();
-      if (data.data.length === 0) {
+      if (!data.data || data.data.length === 0) {
         setHasMore(false);
       } else {
         setAnimes((prev) => [...prev, ...data.data]);
@@ -29,7 +32,7 @@ export default function ComingSoon() {
     fetchUpcoming(page);
   }, [page]);
 
-  // infinite scroll
+  // Infinite scroll
   useEffect(() => {
     const handleScroll = () => {
       if (!hasMore || loading) return;
@@ -75,7 +78,7 @@ export default function ComingSoon() {
 
   return (
     <Box p={8}>
-      <Heading mb={6}>⏳ Coming Soon Anime</Heading>
+      <Heading mb={6}>🔥 Upcoming Anime Terpopuler</Heading>
       <Grid templateColumns="repeat(auto-fill, 200px)" justifyContent="center" gap={6}>
         {animes.map(renderAnimeBox)}
       </Grid>

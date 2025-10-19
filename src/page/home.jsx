@@ -1,6 +1,11 @@
 import { Box, Heading, Text, Grid, Image } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { getTopAnime, getNowSeasonAnime, getUpcomingAnime, getTopManga } from "../api-jikan/Jikanjs";
+import {
+  getTopAnime,
+  getNowSeasonAnime,
+  getUpcomingAnime,
+  getTopManga,
+} from "../api-jikan/Jikanjs";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -21,7 +26,7 @@ export default function Home() {
         const top = await getTopAnime();
         setTopAnimes(top.slice(0, 7));
 
-        await delay(750); // delay 1 detik sebelum request berikutnya
+        await delay(750);
         try {
           const season = await getNowSeasonAnime();
           setSeasonAnimes(season);
@@ -43,7 +48,7 @@ export default function Home() {
           const releasedManga = topManga.filter(
             (m) => m.status === "Publishing" || m.status === "Finished"
           );
-          setLatestMangas(releasedManga.slice(0, 12)); // tampilkan beberapa saja
+          setLatestMangas(releasedManga.slice(0, 12));
         } catch {
           setLatestMangas([]);
         }
@@ -56,8 +61,9 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const renderAnimeBox = (anime) => (
-    <Link key={anime.mal_id} to={`/anime/${anime.mal_id}`}>
+  // ✅ Tambahkan parameter category supaya key unik
+  const renderAnimeBox = (anime, category) => (
+    <Link key={`${category}-${anime.mal_id}`} to={`/anime/${anime.mal_id}`}>
       <Box
         borderWidth="1px"
         borderRadius="lg"
@@ -101,7 +107,7 @@ export default function Home() {
   );
 
   const renderMangaBox = (manga) => (
-    <Link key={manga.mal_id} to={`/manga/${manga.mal_id}`}>
+    <Link key={`manga-${manga.mal_id}`} to={`/manga/${manga.mal_id}`}>
       <Box
         borderWidth="1px"
         borderRadius="lg"
@@ -149,22 +155,28 @@ export default function Home() {
 
   return (
     <Box>
-      {/* Top Anime */}
+      {/* 🔥 Top Anime */}
       <Box p={8} bg="gray.50" borderRadius="lg" mb={8}>
-        <Heading mb={6} color="teal.600">🔥 Top Anime</Heading>
+        <Heading mb={6} color="teal.600">
+          🔥 Top Anime
+        </Heading>
         <Grid templateColumns="repeat(auto-fill, 200px)" justifyContent="center" gap={6}>
-          {topAnimes.map(renderAnimeBox)}
+          {topAnimes.map((a) => renderAnimeBox(a, "top"))}
         </Grid>
       </Box>
 
-      {/* Anime Musim Ini */}
+      {/* 🎬 Anime Musim Ini */}
       <Box p={8} bg="gray.100" borderRadius="lg" mb={8}>
-        <Heading mb={6} color="purple.600">🎬 Anime Musim Ini</Heading>
+        <Heading mb={6} color="purple.600">
+          🎬 Anime Musim Ini
+        </Heading>
         <Grid templateColumns="repeat(auto-fill, 200px)" justifyContent="center" gap={6}>
           {loading ? (
-            <Text fontStyle="italic" color="gray.500">Loading anime musim ini...</Text>
+            <Text fontStyle="italic" color="gray.500">
+              Loading anime musim ini...
+            </Text>
           ) : seasonAnimes.length > 0 ? (
-            seasonAnimes.map(renderAnimeBox)
+            seasonAnimes.map((a) => renderAnimeBox(a, "season"))
           ) : (
             <Text fontStyle="italic" color="gray.500">
               Gagal mengambil anime musim ini atau terlalu banyak request.
@@ -173,11 +185,13 @@ export default function Home() {
         </Grid>
       </Box>
 
-      {/* Coming Soon Anime */}
+      {/* ⏳ Coming Soon Anime */}
       <Box p={8} bg="gray.50" borderRadius="lg" mb={8}>
-        <Heading mb={6} color="orange.600">⏳ Coming Soon Anime</Heading>
+        <Heading mb={6} color="orange.600">
+          ⏳ Coming Soon Anime
+        </Heading>
         <Grid templateColumns="repeat(auto-fill, 200px)" justifyContent="center" gap={6}>
-          {upcomingAnimes.map(renderAnimeBox)}
+          {upcomingAnimes.map((a) => renderAnimeBox(a, "upcoming"))}
 
           <Box
             w="200px"
@@ -199,13 +213,14 @@ export default function Home() {
         </Grid>
       </Box>
 
-      {/* Popular Ongoing Manga */}
+      {/* 📖 Popular Ongoing Manga */}
       <Box p={8} bg="gray.100" borderRadius="lg" mb={8}>
-        <Heading mb={6} color="green.600">📖 Popular Ongoing Manga</Heading>
+        <Heading mb={6} color="green.600">
+          📖 Popular Ongoing Manga
+        </Heading>
         <Grid templateColumns="repeat(auto-fill, 200px)" justifyContent="center" gap={6}>
           {latestMangas.map(renderMangaBox)}
 
-          {/* Box redirect ke MangaBrowse */}
           <Box
             w="200px"
             h="350px"

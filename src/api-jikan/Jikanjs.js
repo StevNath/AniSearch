@@ -11,7 +11,9 @@ const BASE_URL = "https://api.jikan.moe/v4";
  */
 export async function searchAnime(query) {
   try {
-    const res = await fetch(`${BASE_URL}/anime?q=${encodeURIComponent(query)}&limit=10`);
+    const res = await fetch(
+      `${BASE_URL}/anime?q=${encodeURIComponent(query)}&order_by=popularity&sort=asc&limit=10`
+    );
     const data = await res.json();
     return data.data || [];
   } catch (err) {
@@ -21,13 +23,15 @@ export async function searchAnime(query) {
 }
 
 /**
- * Cari manga
+ * Cari manga berdasarkan popularitas
  * @param {string} query
  * @returns {Array} list manga
  */
 export async function searchManga(query) {
   try {
-    const res = await fetch(`${BASE_URL}/manga?q=${encodeURIComponent(query)}&limit=10`);
+    const res = await fetch(
+      `${BASE_URL}/manga?q=${encodeURIComponent(query)}&order_by=popularity&sort=asc&limit=10`
+    );
     const data = await res.json();
     return data.data || [];
   } catch (err) {
@@ -67,10 +71,13 @@ export async function getNowSeasonAnime() {
 }
 
 export async function getUpcomingAnime() {
-  const res = await fetch("https://api.jikan.moe/v4/anime?status=upcoming&limit=25");
+  const res = await fetch(
+    "https://api.jikan.moe/v4/anime?status=upcoming&order_by=popularity&sort=asc"
+  );
   const data = await res.json();
-  return data.data; // ini array anime
+  return data.data;
 }
+
 export async function getTopAnime() {
   try {
     const res = await fetch("https://api.jikan.moe/v4/top/anime?limit=10");
