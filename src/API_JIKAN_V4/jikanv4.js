@@ -20,7 +20,10 @@ export async function searchAnime(query) {
 export async function getTopAnime() {
     try {
         const response = await fetch(`${BASE_URL}/top/anime`);
-        if (!response.ok) throw new Error("Gagal mengambil top anime");
+        if (!response.ok) {
+            console.error(`Error fetching top anime: ${response.status} ${response.statusText}`);
+            throw new Error("Gagal mengambil top anime");
+        }
         const data = await response.json();
         return data.data;
     } catch (error) {
@@ -34,7 +37,10 @@ export async function getTopAnime() {
 export async function getSeasonNowAnime() {
     try {
         const response = await fetch(`${BASE_URL}/seasons/now`);
-        if (!response.ok) throw new Error("Gagal mengambil anime season sekarang");
+        if (!response.ok) {
+            console.error(`Error fetching season now: ${response.status} ${response.statusText}`);
+            throw new Error("Gagal mengambil anime season sekarang");
+        }
         const data = await response.json();
         return data.data;
     } catch (error) {
@@ -53,4 +59,20 @@ export async function getAnimeDetails(id) {
     console.error("Error fetching anime details:", error);
     return null;
   }
+}
+
+// ambil data schedule anime
+export async function getAnimeSchedules() {
+    try {
+        const response = await fetch(`${BASE_URL}/schedules`);
+        if (!response.ok) {
+            console.error(`Error fetching schedules: ${response.status} ${response.statusText}`);
+            throw new Error("Gagal mengambil jadwal anime");
+        }
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error("Schedules Error:", error);
+        return [];
+    }
 }
