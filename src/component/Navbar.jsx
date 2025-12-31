@@ -73,7 +73,7 @@ const handlePreviewSearch = async (q) => {
           <Input
             textAlign="start"
             width="100%"
-            placeholder="Search Anime"
+            placeholder="Search Anime/Manga..."
             _placeholder={{ color: "whiteAlpha.700" }}
             bg="whiteAlpha.200"
             color="white"
