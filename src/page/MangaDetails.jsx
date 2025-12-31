@@ -1,189 +1,144 @@
-import { useState, useEffect } from "react";
+import { Box, Container, Grid, Image, Heading, Text, Badge, Stack, Flex, Spinner } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Heading, Text, Grid, Image, Link } from "@chakra-ui/react";
-import { motion } from "framer-motion";
-// Pastikan path ini sesuai dengan struktur folder Anda
-import { getMangaDetails } from "../API_JIKAN_V4/jikanv4"; 
-
-const MotionBox = motion(Box);
+import { getMangaDetails } from "../API_JIKAN_V4/jikanv4";
 
 export default function MangaDetails() {
-  const { id } = useParams();
+  const { id } = useParams(); 
   const [manga, setManga] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchMangaDetails = async () => {
+    async function fetchData() {
       try {
-        setLoading(true);
+        // Memanggil API menggunakan ID dari parameter URL
         const data = await getMangaDetails(id);
-        if (data) {
-          setManga(data);
-          setError(null);
-        } else {
-          setError("Manga tidak ditemukan");
-        }
+        setManga(data);
+        setLoading(false);
       } catch (err) {
-        console.error(err);
-        setError("Gagal mengambil data manga");
-      } finally {
+        console.error("Error fetching manga details:", err);
         setLoading(false);
       }
-    };
-
-    fetchMangaDetails();
+    }
+    fetchData();
   }, [id]);
 
+  // Tampilan saat sedang memuat data (Loading)
   if (loading) {
     return (
-      <Box
-        bg="white"
-        color="gray.700"
-        minH="100vh"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Text fontSize="lg">Loading...</Text>
-      </Box>
+      <Flex justify="center" align="center" h="100vh">
+        <Spinner size="xl" color="blue.500" />
+      </Flex>
     );
   }
 
-  if (error || !manga) {
+  // Tampilan jika data tidak ditemukan
+  if (!manga) {
     return (
-      <Box
-        bg="white"
-        color="red.500"
-        minH="100vh"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Text fontSize="lg">{error || "Manga tidak ditemukan"}</Text>
+      <Box p={10} textAlign="center">
+        <Text fontSize="xl">Data Manga tidak ditemukan.</Text>
       </Box>
     );
   }
 
+  // Tampilan Utama Detail Manga
   return (
-    <MotionBox
-      bg="white"
-      color="gray.800"
-      minH="100vh"
-      p={{ base: 4, md: 8 }}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <Grid
-        templateColumns={{ base: "1fr", md: "280px 1fr" }}
-        gap={8}
-        maxW="1000px"
-        mx="auto"
-        alignItems="flex-start"
-      >
-        {/* Gambar poster */}
-        <MotionBox
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <Image
-            src={manga.images?.jpg?.large_image_url}
-            alt={manga.title}
-            borderRadius="md"
-            shadow="md"
-            w="100%"
-          />
-        </MotionBox>
-
-        {/* Detail Manga */}
-        <MotionBox
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <Heading size="lg" mb={1}>
-            {manga.title}
-          </Heading>
-          <Text fontSize="md" color="gray.600" mb={4}>
-            {manga.title_japanese || "-"}
-          </Text>
-
-          {/* Grid Informasi Metadata */}
-          <Grid templateColumns="auto 1fr" gap={2} mb={4}>
-            <Text fontWeight="bold">Type:</Text>
-            <Text>{manga.type || "-"}</Text>
-
-            <Text fontWeight="bold">Volumes:</Text>
-            <Text>{manga.volumes || "Unknown"}</Text>
-
-            <Text fontWeight="bold">Chapters:</Text>
-            <Text>{manga.chapters || "Unknown"}</Text>
-
-            <Text fontWeight="bold">Status:</Text>
-            <Text>{manga.status || "-"}</Text>
-
-            <Text fontWeight="bold">Score:</Text>
-            <Text>{manga.score ? `${manga.score} / 10` : "N/A"}</Text>
-
-            <Text fontWeight="bold">Published:</Text>
-            <Text>{manga.published?.string || "-"}</Text>
-
-            <Text fontWeight="bold">Authors:</Text>
-            <Text>
-              {manga.authors?.map((author) => author.name).join(", ") || "-"}
-            </Text>
-
-            <Text fontWeight="bold">Serializations:</Text>
-            <Text>
-              {manga.serializations?.map((s) => s.name).join(", ") || "-"}
-            </Text>
-
-            {/* Genres sebagai badge berwarna */}
-            <Text fontWeight="bold">Genres:</Text>
-            <Box display="flex" flexWrap="wrap" gap={2}>
-              {manga.genres?.map((genre, index) => {
-                const colors = ["#E53E3E", "#3182CE", "#38A169", "#D69E2E", "#805AD5", "#DD6B20"];
-                const color = colors[index % colors.length];
-
-                return (
-                  <MotionBox
-                    key={genre.mal_id}
-                    px={3}
-                    py={1}
-                    borderRadius="md"
-                    border="1px solid"
-                    borderColor={color}
-                    bg={`${color}20`}
-                    color={color}
-                    fontWeight="bold"
-                    fontSize="sm"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.1 * index }}
-                  >
-                    {genre.name}
-                  </MotionBox>
-                );
-              })}
-            </Box>
-          </Grid>
-
-          <Heading size="md" mb={2}>Sinopsis:</Heading>
-          <Text fontSize="md" color="gray.700" lineHeight="1.7">
-            {manga.synopsis || "Sinopsis tidak tersedia."}
-          </Text>
-
-          {manga.url && (
-            <Box mt={4}>
-              <Link href={manga.url} color="blue.500" isExternal>
-                Lihat di MyAnimeList
-              </Link>
-            </Box>
+    <Box mb={10}>
+      {/* Bagian Header Judul */}
+      <Box bg="blue.600" color="white" py={10} px={5}>
+        <Container maxW="container.xl">
+          <Heading as="h1" size="2xl">{manga.title}</Heading>
+          {manga.title_japanese && (
+            <Text fontSize="xl" mt={2} opacity={0.8}>{manga.title_japanese}</Text>
           )}
-        </MotionBox>
-      </Grid>
-    </MotionBox>
+        </Container>
+      </Box>
+
+      <Container maxW="container.xl" py={10}>
+        <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={10}>
+          {/* Kolom Kiri: Gambar Sampul & Info Statistik */}
+          <Box>
+            <Image 
+              src={manga.images?.jpg?.large_image_url} 
+              alt={manga.title} 
+              borderRadius="lg" 
+              shadow="2xl" 
+              w="100%"
+              objectFit="cover"
+            />
+            
+            <Stack mt={5} spacing={3} p={5} borderWidth="1px" borderRadius="md" bg="gray.50">
+              <Flex justify="space-between">
+                <Text fontWeight="bold">Score:</Text>
+                <Badge colorScheme="green" fontSize="1em">⭐ {manga.score || "N/A"}</Badge>
+              </Flex>
+              <Flex justify="space-between">
+                <Text fontWeight="bold">Rank:</Text>
+                <Text>#{manga.rank || "-"}</Text>
+              </Flex>
+              <Flex justify="space-between">
+                <Text fontWeight="bold">Popularity:</Text>
+                <Text>#{manga.popularity || "-"}</Text>
+              </Flex>
+              <Flex justify="space-between">
+                <Text fontWeight="bold">Status:</Text>
+                <Badge colorScheme={manga.status === "Publishing" ? "green" : "red"}>
+                  {manga.status}
+                </Badge>
+              </Flex>
+              <Flex justify="space-between">
+                <Text fontWeight="bold">Type:</Text>
+                <Text>{manga.type}</Text>
+              </Flex>
+              <Flex justify="space-between">
+                <Text fontWeight="bold">Chapters:</Text>
+                <Text>{manga.chapters || "?"}</Text>
+              </Flex>
+              <Flex justify="space-between">
+                <Text fontWeight="bold">Volumes:</Text>
+                <Text>{manga.volumes || "?"}</Text>
+              </Flex>
+            </Stack>
+          </Box>
+
+          {/* Kolom Kanan: Sinopsis, Genre, Author */}
+          <Box>
+            <Heading size="lg" mb={4} borderBottom="2px solid" borderColor="blue.200" pb={2}>
+              Synopsis
+            </Heading>
+            <Text fontSize="lg" lineHeight="tall" textAlign="justify" mb={6}>
+              {manga.synopsis || "No synopsis available."}
+            </Text>
+
+            <Heading size="md" mb={3}>Genres</Heading>
+            <Stack direction="row" spacing={2} wrap="wrap" mb={6}>
+              {manga.genres && manga.genres.map((genre) => (
+                <Badge key={genre.mal_id} colorScheme="purple" px={3} py={1} borderRadius="full">
+                  {genre.name}
+                </Badge>
+              ))}
+            </Stack>
+
+            <Heading size="md" mb={3}>Authors</Heading>
+            <Stack direction="row" spacing={4}>
+              {manga.authors && manga.authors.map((author) => (
+                <Text key={author.mal_id} fontWeight="bold" color="blue.600">
+                  {author.name}
+                </Text>
+              ))}
+            </Stack>
+
+            {/* Tombol Eksternal (Opsional) */}
+            {manga.url && (
+              <Box mt={8}>
+                <Text fontSize="sm" color="gray.500">
+                  More info at: <a href={manga.url} target="_blank" rel="noreferrer" style={{color: "blue"}}>MyAnimeList</a>
+                </Text>
+              </Box>
+            )}
+          </Box>
+        </Grid>
+      </Container>
+    </Box>
   );
 }

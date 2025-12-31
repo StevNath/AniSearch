@@ -90,3 +90,35 @@ export async function getMangaDetails(id) {
     return null;
   }
 }
+// Top Manga
+export async function getTopManga() {
+    try {
+        const response = await fetch(`${BASE_URL}/top/manga`);
+        if (!response.ok) {
+            console.error(`Error fetching top manga: ${response.status} ${response.statusText}`);
+            throw new Error("Gagal mengambil top manga");
+        }
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error("TopManga Error:", error);
+        return [];
+    }
+}
+
+// Ambil data manga yang sedang Publishing
+export async function getPublishingManga() {
+    try {
+        // filter=publishing akan mengambil manga yang statusnya masih jalan
+        const response = await fetch(`${BASE_URL}/top/manga?filter=publishing`);
+        if (!response.ok) {
+            console.error(`Error fetching publishing manga: ${response.status}`);
+            throw new Error("Gagal mengambil publishing manga");
+        }
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error("PublishingManga Error:", error);
+        return [];
+    }
+}
