@@ -76,3 +76,17 @@ export async function getAnimeSchedules() {
         return [];
     }
 }
+// Ambil data detail manga berdasarkan ID
+export async function getMangaDetails(id) {
+  try {
+    const response = await fetch(`${BASE_URL}/manga/${id}/full`);
+    if (!response.ok) {
+        throw new Error("Gagal mengambil detail manga");
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching manga details:", error);
+    return null;
+  }
+}
