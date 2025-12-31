@@ -27,7 +27,7 @@ export default function Home() {
       }
 
       // Jeda 1 detik agar API tidak memblokir
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
       // 2. Ambil Top Manga
       try {
@@ -38,7 +38,7 @@ export default function Home() {
       }
 
       // Jeda 1 detik
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
       // 3. Ambil Anime Season Now
       try {
@@ -49,7 +49,7 @@ export default function Home() {
       }
 
       // Jeda 1 detik
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
       // 4. Ambil Manga Publishing 
       try {
@@ -59,7 +59,7 @@ export default function Home() {
         console.error("Error fetching publishing manga:", err);
       }
 
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
       // 5. Ambil Schedules
       try {
@@ -167,24 +167,6 @@ export default function Home() {
           </Box>
         ))}
       </Grid>
-
-      {/* Section Schedules / Airing Today */ }
-      <Heading fontSize="2xl" mb={4} ml={2} mt={10}>Airing Today</Heading>
-      <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
-        {SchedulesAnimes.slice(0, 6).map((anime) => (
-          <Box key={anime.mal_id}>
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" m={5} boxShadow="md" transition="all 0.3s ease" _hover={{ transform: "scale(1.05)",boxShadow:"lg"}}>
-              <Image src={anime.images.jpg.image_url} alt={anime.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} transition="all 0.3s ease" _hover={{ transform: "scale(1.05)",boxShadow:"lg"}}/>
-              <Box p={5}>
-                <Link to={`/anime/${anime.mal_id}`} >{anime.title}
-                <Text fontSize="sm" color="gray.500">{anime.broadcast?.day || "Unknown Day"} {anime.broadcast?.time || ""}</Text>
-                </Link>
-              </Box>
-            </Box>
-          </Box>
-        ))}
-      </Grid>
-
-    </Box>
+      </Box>
   );
 }

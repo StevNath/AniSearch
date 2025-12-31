@@ -1,42 +1,46 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Heading, Text, Grid, Image, Badge, Spinner, Center, VStack } from "@chakra-ui/react";
+import { getSeasonNowAnime } from "../API_JIKAN_V4/jikanv4";
+
+// Convert JST -> GMT
+function convertJSTtoGMT(timeJST) {
+  if (!timeJST) return "N/A";
+
+  const [hour, minute] = timeJST.split(":").map(Number);
+  let gmtHour = hour - 9;
+  if (gmtHour < 0) gmtHour += 24;
+
+  return `${gmtHour.toString().padStart(2, "0")}:${minute
+    .toString()
+    .padStart(2, "0")} GMT`;
+}
 
 export default function Schedules() {
   const navigate = useNavigate();
   const [schedules, setSchedules] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // Daftar hari untuk mapping
-  const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+  const days = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"];
 
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const response = await fetch("https://api.jikan.moe/v4/schedules");
-        const result = await response.json();
-        
-        if (!result.data) {
-            throw new Error("Data not found in response");
-        }
+        const result = await getSeasonNowAnime();
 
-        // Mengelompokkan data berdasarkan hari
-        const grouped = result.data.reduce((acc, anime) => {
+        const grouped = result.reduce((acc, anime) => {
           let day = anime.broadcast?.day?.toLowerCase() || "other";
-          // Normalisasi hari (misal: "Mondays" -> "monday")
-          if (day.endsWith('s')) {
-            day = day.slice(0, -1);
-          }
-          
+          if (day.endsWith("s")) day = day.slice(0, -1);
+
           if (!acc[day]) acc[day] = [];
           acc[day].push(anime);
           return acc;
         }, {});
 
         setSchedules(grouped);
-        setLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching schedules:", error);
+      } finally {
         setLoading(false);
       }
     };
@@ -44,52 +48,62 @@ export default function Schedules() {
     fetchSchedules();
   }, []);
 
-  if (loading) return <Center h="100vh"><Spinner size="xl" /></Center>;
+  if (loading)
+    return (
+      <Center h="100vh">
+        <Spinner size="xl" />
+      </Center>
+    );
 
   return (
     <Box p={8}>
       <Heading mb={2}>Schedules</Heading>
       <Text mb={6}>Ini adalah jadwal anime season ini berdasarkan hari tayang.</Text>
-   
+
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-        {days.map((day, index) => (
-          <Box 
-            key={day} 
-            p={5} 
-            shadow="lg" 
-            borderWidth="1px" 
+        {days.map((day) => (
+          <Box
+            key={day}
+            p={5}
+            shadow="lg"
+            borderWidth="1px"
             borderRadius="lg"
             bg="white"
-            // Spesifik untuk Box ke-7 (Sunday) agar di tengah jika grid sisa satu
             gridColumn={day === "sunday" ? "2 / span 1" : "auto"}
           >
             <Heading size="md" mb={4} textTransform="capitalize" color="blue.600">
               {day}
             </Heading>
-            
+
             <VStack align="stretch" spacing={3}>
-              {schedules[day]?.slice(0, 3).map((anime) => ( // Batasi 3 anime per box biar rapi
-                <Box 
-                  key={anime.mal_id} 
-                  display="flex" 
-                  alignItems="center" 
+              {schedules[day]?.slice(0, 3).map((anime) => (
+                <Box
+                  key={anime.mal_id}
+                  display="flex"
+                  alignItems="center"
                   gap={3}
                   onClick={() => navigate(`/anime/${anime.mal_id}`)}
                   cursor="pointer"
                   _hover={{ bg: "gray.100" }}
                   p={2}
                   borderRadius="md"
-                  transition="background 0.2s"
                 >
-                  <Image 
-                    src={anime.images.jpg.small_image_url} 
-                    borderRadius="md" 
-                    boxSize="50px" 
+                  <Image
+                    src={anime.images.jpg.small_image_url}
+                    borderRadius="md"
+                    boxSize="50px"
                     objectFit="cover"
                   />
                   <Box>
-                    <Text fontSize="sm" fontWeight="bold" noOfLines={1}>{anime.title}</Text>
-                    <Badge colorScheme="green">{anime.broadcast.time || "N/A"} JST</Badge>
+                    <Text fontSize="sm" fontWeight="bold" noOfLines={1}>
+                      {anime.title}
+                    </Text>
+
+                    <Badge colorScheme="green">
+                      {anime.broadcast?.time
+                        ? convertJSTtoGMT(anime.broadcast.time)
+                        : "N/A"}
+                    </Badge>
                   </Box>
                 </Box>
               )) || <Text color="gray.500">No schedule found</Text>}
