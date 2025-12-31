@@ -1,9 +1,9 @@
 import { 
-  Box, Grid, GridItem, Input, Flex, Image, Text, VStack, HStack, Link, Spinner 
+  Box, Grid, GridItem, Input, Flex, Image, Text, VStack, HStack, Link, Spinner, Badge 
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { searchAnime } from "../API_JIKAN_V4/jikanv4"; // hanya anime
+import { searchAnime, searchManga } from "../API_JIKAN_V4/jikanv4";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
@@ -24,10 +24,21 @@ const handlePreviewSearch = async (q) => {
   setLoading(true);
 
   try {
-    await delay(500); // delay 0.5 detik sebelum kirim request
+    await delay(500); 
 
-    const animeResults = await searchAnime(q);
-    setResults(animeResults.slice(0, 5)); // tampilkan 5 hasil teratas
+    // Panggil kedua API secara bersamaan
+    const [animeData, mangaData] = await Promise.all([
+      searchAnime(q),
+      searchManga(q)
+    ]);
+
+    // Beri label tipe agar sistem tahu ini Anime atau Manga
+    const animeTagged = animeData.slice(0, 3).map(item => ({ ...item, type: 'Anime' }));
+    const mangaTagged = mangaData.slice(0, 3).map(item => ({ ...item, type: 'Manga' }));
+
+    // Gabungkan hasilnya
+    setResults([...animeTagged, ...mangaTagged]);
+
   } catch (error) {
     console.error(error);
     setResults([]);
@@ -96,35 +107,49 @@ const handlePreviewSearch = async (q) => {
                 </Flex>
               ) : results.length > 0 ? (
                 results.map((item) => (
-                  <Flex
-                    key={item.mal_id}
-                    align="center"
-                    p={2}
-                    w="100%"
-                    _hover={{ bg: "blue.100", cursor: "pointer" }}
-                    onClick={() => {
-                      navigate(`/anime/${item.mal_id}`);
-                      setResults([]);
-                      setQuery("");
-                    }}
-                  >
-                    <Image
-                      src={item.images?.jpg?.image_url || ""}
-                      alt={item.title}
-                      boxSize="40px"
-                      borderRadius="md"
-                      mr={3}
-                    />
-                    <Box>
-                      <Text fontWeight="bold" color="black" fontSize="sm">
-                        {item.title}
-                      </Text>
-                      <Text fontSize="xs" color="black">
-                        ⭐ {item.score ?? "N/A"}
-                      </Text>
-                    </Box>
-                  </Flex>
-                ))
+  <Flex
+    // Ganti key agar unik (karena ID anime & manga bisa sama)
+    key={`${item.type}-${item.mal_id}`} 
+    align="center"
+    p={2}
+    w="100%"
+    _hover={{ bg: "blue.100", cursor: "pointer" }}
+    
+    // UBAH BAGIAN ONCLICK INI
+    onClick={() => {
+      // Cek tipenya: jika Manga ke /manga/, jika Anime ke /anime/
+      if (item.type === 'Manga') {
+        navigate(`/manga/${item.mal_id}`);
+      } else {
+        navigate(`/anime/${item.mal_id}`);
+      }
+      setResults([]);
+      setQuery("");
+    }}
+  >
+    <Image
+      src={item.images?.jpg?.image_url || ""}
+      alt={item.title}
+      boxSize="40px"
+      borderRadius="md"
+      mr={3}
+    />
+    <Box>
+      <Flex align="center">
+        {/* TAMBAHAN: Badge untuk pembeda */}
+        <Badge colorScheme={item.type === 'Anime' ? 'blue' : 'green'} mr={2} fontSize="xs">
+          {item.type}
+        </Badge>
+        <Text fontWeight="bold" color="black" fontSize="sm" noOfLines={1}>
+          {item.title}
+        </Text>
+      </Flex>
+      <Text fontSize="xs" color="gray.600">
+        ⭐ {item.score ?? "N/A"}
+      </Text>
+    </Box>
+  </Flex>
+))
               ) : (
                 <Box w="100%" p={3} textAlign="center" color="gray.500">
                   Anime not found

@@ -122,3 +122,16 @@ export async function getPublishingManga() {
         return [];
     }
 }
+
+// searchManga
+export async function searchManga(query) {
+  try {
+    const response = await fetch(`${BASE_URL}/manga?q=${encodeURIComponent(query)}`);
+    if (!response.ok) throw new Error("Gagal mencari manga");
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("searchManga Error:", error);
+    return [];
+  }
+}
