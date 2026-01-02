@@ -29,23 +29,24 @@ export default function Home() {
       // Jeda 1 detik agar API tidak memblokir
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      // 2. Ambil Top Manga
-      try {
-        const mangaData = await getTopManga();
-        setTopManga(mangaData);
-      } catch (err) {
-        console.error("Error fetching top manga:", err);
-      }
-
-      // Jeda 1 detik
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // 3. Ambil Anime Season Now
+      // 2. Ambil Season Now Anime
       try {
         const seasonNowData = await getSeasonNowAnime();
         setSeasonAnimes(seasonNowData);
       } catch (err) {
         console.error("Error fetching season now anime:", err);
+      }
+
+
+      // Jeda 1 detik
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // 3. Ambil Top manga
+       try {
+        const mangaData = await getTopManga();
+        setTopManga(mangaData);
+      } catch (err) {
+        console.error("Error fetching top manga:", err);
       }
 
       // Jeda 1 detik
@@ -98,7 +99,7 @@ export default function Home() {
       
       {/* Section Top Anime */ }
       <Link to={`/top`}>
-      <Heading fontSize="2xl" mb={4} ml={2}>Top Anime</Heading>
+      <Heading fontSize="2xl" mb={4} ml={2} transition="all 0.3s ease" _hover={{ color: "blue.500", cursor: "pointer" }}>Top Anime</Heading>
       </Link>
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {TopAnimes.slice(0, 6).map((anime) => (
@@ -118,7 +119,7 @@ export default function Home() {
 
       {/* Section Anime Season Sekarang */ }
       <Link to={`/seasonnow`}>
-      <Heading fontSize="2xl" mb={4} ml={2}>Anime Season Now</Heading>
+      <Heading fontSize="2xl" mb={4} ml={2} transition="all 0.3s ease" _hover={{ color: "blue.500", cursor: "pointer" }}>Anime Season Now</Heading>
       </Link>
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {SeasonNowAnimes.slice(0, 6).map((anime) => (
