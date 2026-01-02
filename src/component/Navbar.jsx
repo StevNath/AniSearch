@@ -163,8 +163,10 @@ const handlePreviewSearch = async (q) => {
         <GridItem>
           <HStack spacing={6} justify="flex-end">
             <Link as={RouterLink} to="/" color="white">Home</Link>
+            <Link as={RouterLink} to="/top" color="white">Top</Link>
             <Link as={RouterLink} to="/schedules" color="white">Schedules</Link>
             <Link as={RouterLink} to="/about" color="white">About</Link>
+        
           </HStack>
         </GridItem>
       </Grid>

@@ -5,6 +5,8 @@ import About from "./page/about";
 import Schedules from "./page/schedules";
 import AnimeDetails from "./page/animedetails";
 import MangaDetails from "./page/mangadetails";
+import Top from "./page/top";
+import SeasonNow from "./page/seasonnow";
 
 export default function App() {
   return (
@@ -16,6 +18,9 @@ export default function App() {
         <Route path="/schedules" element={<Schedules />} />
         <Route path="/anime/:id" element={<AnimeDetails />} />
         <Route path="/manga/:id" element={<MangaDetails />} />
+        <Route path="/top" element={<Top />} />
+        <Route path="/seasonnow" element={<SeasonNow />} />
+
       </Routes>
     </>
   );

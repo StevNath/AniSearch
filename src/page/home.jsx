@@ -99,7 +99,9 @@ export default function Home() {
       </Grid>
       
       {/* Section Top Anime */ }
+      <Link to={`/top`}>
       <Heading fontSize="2xl" mb={4} ml={2}>Top Anime</Heading>
+      </Link>
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {TopAnimes.slice(0, 6).map((anime) => (
           <Box key={anime.mal_id}>
@@ -117,7 +119,9 @@ export default function Home() {
       </Grid>
 
       {/* Section Anime Season Sekarang */ }
+      <Link to={`/seasonnow`}>
       <Heading fontSize="2xl" mb={4} ml={2}>Anime Season Now</Heading>
+      </Link>
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {SeasonNowAnimes.slice(0, 6).map((anime) => (
           <Box key={anime.mal_id}>
