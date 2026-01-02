@@ -90,12 +90,10 @@ export default function Home() {
           <Heading fontSize="xl" mb={4}>Search Manga</Heading>
           <Text>Find detailed information about your favorite Manga!</Text>
         </Box>
-        <Link to="/schedules">
-          <Box p={5} shadow="md" borderWidth="1px" m={5} borderRadius="md" _hover={{ shadow: "lg", bg: "gray.50" }} transition="all 0.2s">
-            <Heading fontSize="xl" mb={4}>Schedules</Heading>
-            <Text>Never Miss a New Episode — See When Your Favorite Anime Airs!</Text>
-          </Box>
-        </Link>
+        <Box p={5} shadow="md" borderWidth="1px" m={5} borderRadius="md">
+          <Heading fontSize="xl" mb={4}>Schedules</Heading>
+          <Text>Never Miss a New Episode — See When Your Favorite Anime Airs!</Text>
+        </Box>
       </Grid>
       
       {/* Section Top Anime */ }
