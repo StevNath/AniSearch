@@ -152,7 +152,7 @@ const handlePreviewSearch = async (q) => {
 ))
               ) : (
                 <Box w="100%" p={3} textAlign="center" color="gray.500">
-                  Anime not found
+                  Anime or Manga not found
                 </Box>
               )}
             </VStack>
