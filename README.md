@@ -4,7 +4,7 @@ A modern web application for searching and discovering anime. Built with React a
 
 ## 🎌 About
 
-AniSearch is a web-based anime search and discovery platform that helps users find information about their favorite anime series. The application provides a clean, intuitive interface for browsing and searching through a comprehensive anime database.
+AniSearch is a web-based anime search and discovery platform that helps users find information about their favorite anime series. The application provides a clean, intuitive interface for browsing and discovering anime content.
 
 ## ✨ Features
 
@@ -80,7 +80,11 @@ This project uses ESLint to maintain code quality. The configuration includes re
 
 ### React Compiler
 
-The React Compiler is not enabled by default due to its impact on development and build performance. To enable it, refer to the [React Compiler documentation](https://react.dev/learn/react-compiler/installation).
+The React Compiler is not enabled by default due to its impact on development and build performance. To enable it, refer to the [React Compiler documentation](https://react.dev/learn/react-compiler).
+
+## 🙏 Credits
+
+This project uses data from the **[Jikan API](https://jikan.moe/)** - a free, open-source anime data API. Jikan provides comprehensive anime information including titles, genres, ratings, and more.
 
 ## 🤝 Contributors
 
