@@ -86,20 +86,10 @@ The React Compiler is not enabled by default due to its impact on development an
 
 This project was built by talented developers:
 
-- [StevNath](https://github.com/StevNath) - Lead Developer
+- [StevNath](https://github.com/StevNath) 
 - [Nurulloh21](https://github.com/Nurulloh21)
 - [JoshuaImanuel](https://github.com/JoshuaImanuel)
 - [PutraParlindungan](https://github.com/PutraParlindungan)
 
-## 📜 License
-
-This project is currently unlicensed. For more information about licensing options, please contact the repository owner.
-
-## 🔗 Links
-
-- Repository: [github.com/StevNath/AniSearch](https://github.com/StevNath/AniSearch)
-- Issues: [github.com/StevNath/AniSearch/issues](https://github.com/StevNath/AniSearch/issues)
-
----
 
 > **Note**: This README was generated with GitHub Copilot to provide comprehensive documentation for the AniSearch project.
