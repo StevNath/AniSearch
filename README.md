@@ -1,16 +1,105 @@
-# React + Vite
+# AniSearch
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application for searching and discovering anime. Built with React and Vite for a fast, responsive user experience.
 
-Currently, two official plugins are available:
+## 🎌 About
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+AniSearch is a web-based anime search and discovery platform that helps users find information about their favorite anime series. The application provides a clean, intuitive interface for browsing and searching through a comprehensive anime database.
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Fast Search**: Quickly search for anime by title, genre, or other criteria
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **Modern Tech Stack**: Built with React and Vite for optimal performance
+- **Real-time Updates**: Instant results as you search
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend Framework**: React
+- **Build Tool**: Vite
+- **JavaScript**: 94.8%
+- **Styling**: CSS (4.3%)
+- **Markup**: HTML (0.9%)
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/StevNath/AniSearch.git
+cd AniSearch
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## 📦 Available Scripts
+
+- `npm run dev` - Start the development server with HMR
+- `npm run build` - Build the application for production
+- `npm run preview` - Preview the production build locally
+- `npm run lint` - Run ESLint to check code quality
+
+## 📄 Project Structure
+
+```
+AniSearch/
+├── src/
+│   ├── components/     # React components
+│   ├── pages/          # Page components
+│   ├── styles/         # CSS stylesheets
+│   ├── App.jsx         # Main application component
+│   └── main.jsx        # Application entry point
+├── public/             # Static assets
+├── index.html          # HTML template
+├── vite.config.js      # Vite configuration
+├── eslint.config.js    # ESLint configuration
+└── package.json        # Project dependencies
+```
+
+## 🔧 Development
+
+### Code Quality
+
+This project uses ESLint to maintain code quality. The configuration includes recommended rules for React development. For production applications, consider enabling TypeScript with type-aware lint rules.
+
+### React Compiler
+
+The React Compiler is not enabled by default due to its impact on development and build performance. To enable it, refer to the [React Compiler documentation](https://react.dev/learn/react-compiler/installation).
+
+## 🤝 Contributors
+
+This project was built by talented developers:
+
+- [StevNath](https://github.com/StevNath) - Lead Developer
+- [Nurulloh21](https://github.com/Nurulloh21)
+- [JoshuaImanuel](https://github.com/JoshuaImanuel)
+- [PutraParlindungan](https://github.com/PutraParlindungan)
+
+## 📜 License
+
+This project is currently unlicensed. For more information about licensing options, please contact the repository owner.
+
+## 🔗 Links
+
+- Repository: [github.com/StevNath/AniSearch](https://github.com/StevNath/AniSearch)
+- Issues: [github.com/StevNath/AniSearch/issues](https://github.com/StevNath/AniSearch/issues)
+
+---
+
+> **Note**: This README was generated with GitHub Copilot to provide comprehensive documentation for the AniSearch project.
